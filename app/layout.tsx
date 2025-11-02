@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { QueryProvider } from "./providers/QueryProvider";
+import { UserInfo } from "@/components/UserInfo";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +30,33 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <QueryProvider>
+          <div className="min-h-screen flex flex-col">
+            <header className="border-b border-gray-200 bg-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-16">
+                  <Link
+                    href="/"
+                    className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors"
+                  >
+                    BIGS App
+                  </Link>
+                  <nav className="flex items-center gap-6">
+                    <Link
+                      href="/boards"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                    >
+                      게시판
+                    </Link>
+                    <UserInfo />
+                  </nav>
+                </div>
+              </div>
+            </header>
+
+            <main className="flex-1">{children}</main>
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );
